@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+const banco = require('./src/util/database');
+require('dotenv').config(); //.env
 const app = express();
+const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -15,7 +18,15 @@ app.use((req, res) => {
 });
 
 //Inicialização do servidor
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
+  // Testar a conexão com o banco no startup
+  banco.getConnection((err, connection) => {
+    if (err) {
+      console.error('Erro ao conectar no banco:', err);
+    } else {
+      console.log('Conexão com o banco realizada com sucesso!');
+      connection.release();
+    }
+  });
 });
