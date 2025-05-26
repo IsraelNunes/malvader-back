@@ -1,0 +1,1 @@
+//Gerencia cadastro, autenticação e operações dos funcionários.
