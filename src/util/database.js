@@ -1,0 +1,1 @@
+//Configuração da conexão com o MySQL (host, usuário, senha, nome do banco).
