@@ -1,0 +1,1 @@
+//Rotas como /api/clientes para operações relacionadas a clientes.

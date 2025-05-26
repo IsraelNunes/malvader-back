@@ -1,0 +1,1 @@
+//Rotas como /api/funcionarios para operações dos funcionários (cadastro, login, etc.).
