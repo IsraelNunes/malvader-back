@@ -1,0 +1,1 @@
+// Classe Funcionario com atributos como id, nome, cargo, cpf, senha.
