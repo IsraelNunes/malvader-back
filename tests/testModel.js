@@ -1,57 +1,34 @@
-// testModels.js
+// testModel.js
 const sequelize = require('../src/util/database');
 const Usuario = require('../src/model/Usuario');
-const Cliente = require('../src/model/Cliente');
-const Funcionario = require('../src/model/Funcionario');
-const Conta = require('../src/model/Conta');
+const PermissaoUsuario = require('../src/model/PermissaoUsuario'); // ajuste o caminho se necessário
 
-async function testarTudo() {
+async function testarPermissaoUsuario() {
   try {
     await sequelize.authenticate();
     console.log('✅ Conexão com o banco de dados estabelecida.');
 
-    // Criação das tabelas se não existirem (e atualiza estrutura se precisar)
+    // Sincroniza as tabelas (cria ou altera)
     await sequelize.sync({ alter: true });
     console.log('📦 Tabelas sincronizadas com sucesso.');
 
-    // Criar usuário base
-    const usuario = await Usuario.create({
-      nome: 'João da Silva',
-      CPF: '12345678900',
-      data_nascimento: '1985-03-15',
-      telefone: '11988887777',
-      tipo_usuario: 'cliente', // ou 'funcionario'
-      senha_hash: 'senha123',
+    // Busca um usuário existente
+    const usuarioExistente = await Usuario.findOne();
+
+    if (!usuarioExistente) {
+      console.log('⚠️ Nenhum usuário encontrado no banco. Por favor, crie um usuário primeiro.');
+      return;
+    }
+
+    console.log('👤 Usuário existente encontrado:', usuarioExistente.idUsuario);
+
+    // Cria permissão para o usuário existente
+    const permissaoUsuario = await PermissaoUsuario.create({
+      Usuario_idUsuario: usuarioExistente.idUsuario,
+      permissao_id_role: 3, // Ajuste conforme permissão válida no seu banco
     });
 
-    console.log('👤 Usuário criado:', usuario.idUsuario);
-
-    // Criar cliente vinculado
-    const cliente = await Cliente.create({
-      score_credito: 750.50,
-      Usuario_idUsuario: usuario.idUsuario
-    });
-
-    console.log('🧍 Cliente criado:', cliente.id_cliente);
-
-    // Criar funcionário vinculado (opcional, se o usuário for do tipo funcionario)
-    const funcionario = await Funcionario.create({
-      cargo: 'Analista',
-      salario: 4500.00,
-      Usuario_idUsuario: usuario.idUsuario
-    });
-
-    console.log('🧑‍💼 Funcionário criado:', funcionario.id_funcionario);
-
-    // Criar conta vinculada ao usuário
-    const conta = await Conta.create({
-      numero_conta: '9876543210',
-      saldo: 1200.75,
-      tipo_conta: 'corrente',
-      Usuario_idUsuario: usuario.idUsuario
-    });
-
-    console.log('💳 Conta criada:', conta.id_conta);
+    console.log('🔐 Permissão do usuário criada:', permissaoUsuario.id_permissao_usuario);
 
   } catch (err) {
     console.error('❌ Erro ao testar os modelos:', err);
@@ -61,4 +38,4 @@ async function testarTudo() {
   }
 }
 
-testarTudo();
+testarPermissaoUsuario();
