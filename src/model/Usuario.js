@@ -1,14 +1,16 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../util/database');
 
-const Usuario = sequelize.define('Usuario', {
+class Usuario extends Model{}
+
+Usuario.init({
   idUsuario: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
   nome: {
-    type: DataTypes.STRING(100),
+    type: DataTypes.STRING,
     allowNull: false,
   },
   CPF: {
@@ -29,7 +31,7 @@ const Usuario = sequelize.define('Usuario', {
     allowNull: false,
   },
   tipo_usuario: {
-    type: DataTypes.ENUM('cliente', 'funcionario', 'admin'), // Exemplo de tipos possíveis
+    type: DataTypes.ENUM('FUNCIONARIO', 'CLIENTE'), // Exemplo de tipos possíveis
     allowNull: false,
   },
   senha_hash: {
@@ -45,8 +47,11 @@ const Usuario = sequelize.define('Usuario', {
     allowNull: true,
   },
 }, {
-  tableName: 'Usuarios',
+  sequelize,
+  modelName : 'Usuarios' ,
+  tableName: 'Usuario',
   timestamps: false,
-});
+
+})
 
 module.exports = Usuario;
