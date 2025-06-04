@@ -1,8 +1,10 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
+const sequelize = require('../util/database');
+const Usuario = require('./Usuario');
 
-module.exports = (sequelize) => {
-  const Cliente = sequelize.define('Cliente', {
-    id_cliente: {
+class Cliente extends Model {}
+Cliente.init({
+   id_cliente: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -15,26 +17,28 @@ module.exports = (sequelize) => {
     },
     Usuario_idUsuario: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+      model: 'Usuario',
+      key: 'idUsuario'
     }
-  }, {
+      
+    } 
+  }, { 
+    sequelize,
+    modelName: 'Cliente',
     tableName: 'cliente',
-    timestamps: true,
-    charset: 'utf8mb4',
-    collate: 'utf8mb4_unicode_ci'
-  });
+    timestamps: false
+});
 
-  // Associação (relacionamento com a tabela Usuario)
-  Cliente.associate = (models) => {
-    Cliente.belongsTo(models.Usuario, {
-      foreignKey: 'Usuario_idUsuario',
-      targetKey: 'idUsuario',
-      as: 'usuario',
-      onDelete: 'NO ACTION',
-      onUpdate: 'NO ACTION'
-    });
-  };
+Cliente.belongsTo(Usuario, {
+  foreignKey: 'Usuario_idUsuario',
+  as: 'usuario'
+});
 
-  return Cliente;
-};
+Usuario.hasOne(Cliente, {
+  foreignKey: 'Usuario_idUsuario',
+  as: 'cliente'
+});
 
+module.exports = Cliente;

@@ -3,19 +3,15 @@ const express = require('express');
 const router = express.Router();
 const ClienteController = require('../../src/controller/clienteController');
 
-//GET
-router.get('/:id', ClienteController.getById);
+//GET router.get('/:id', ClienteController.getById);
 
 // GET 
-router.get('/', ClienteController.getAll)
+router.get('/listar', ClienteController.getAll)
 
-// POST
-router.post('/', ClienteController.create);
+router.post('/criar', ClienteController.create);
 
-// PUT 
-router.put('/:id', ClienteController.update);
+// PUT router.put('/:id', ClienteController.update);
 
-// DELETE 
-router.delete('/:id', ClienteController.delete);
+// DELETE router.delete('/:id', ClienteController.delete);
 
 module.exports = router;
