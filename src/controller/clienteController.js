@@ -8,7 +8,7 @@ class ClienteController {
       const clientes = await ClienteDAO.buscarTodos();
       res.json(clientes);
     } catch (error) {
-      res.status(500).json({ erro: 'Erro ao buscar usuários.' });
+      res.status(500).json({ erro: 'Erro ao busca usuários.' });
     }
   }
 static async create(req, res) {

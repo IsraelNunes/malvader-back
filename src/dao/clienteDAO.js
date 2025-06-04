@@ -9,6 +9,7 @@ class ClienteDAO {
     model: Usuario,
     as: 'usuario',
     attributes: ['idUsuario', 'nome', 'CPF', 'telefone', 'data_nascimento', 'tipo_usuario']
+    //
   }
 });
       return clientes;
