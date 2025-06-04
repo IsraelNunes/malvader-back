@@ -2,6 +2,7 @@ const ClienteDAO = require('../dao/clienteDAO');
 const UsuarioDAO = require('../dao/UsuarioDAO');
 const bcrypt = require('bcrypt');
 class ClienteController {
+  
   static async getAll(req, res) {
     try {
       const clientes = await ClienteDAO.buscarTodos();
@@ -59,5 +60,51 @@ static async create(req, res) {
       res.status(500).json({ erro: 'Erro ao criar cliente' });
     }
   }
+
+static async update(req, res) {
+  try {
+    const { cpf } = req.params;
+
+    const {
+      nome,
+      telefone,
+      data_nascimento,
+      score_credito
+    } = req.body;
+
+    const dadosUsuario = { nome, telefone, data_nascimento };
+    const dadosCliente = { score_credito };
+
+    const resultado = await ClienteDAO.atualizar(cpf, dadosUsuario, dadosCliente);
+
+    if (!resultado) {
+      return res.status(404).json({ erro: 'Cliente não encontrado.' });
+    }
+
+    res.status(200).json({
+      mensagem: 'Cliente atualizado com sucesso.',
+      cliente: resultado
+    });
+  } catch (error) {
+    console.error('Erro ao atualizar cliente:', error);
+    res.status(500).json({ erro: 'Erro ao atualizar cliente.' });
+  }
+}
+static async delete(req, res) {
+  try {
+    const { cpf } = req.params;
+
+    const resultado = await ClienteDAO.deletar(cpf);
+
+    if (!resultado) {
+      return res.status(404).json({ erro: 'Cliente não encontrado.' });
+    }
+
+    res.status(200).json({ mensagem: 'Cliente deletado com sucesso.' });
+  } catch (error) {
+    console.error('Erro ao deletar cliente:', error);
+    res.status(500).json({ erro: 'Erro ao deletar cliente.' });
+  }
+}
 }
 module.exports = ClienteController;

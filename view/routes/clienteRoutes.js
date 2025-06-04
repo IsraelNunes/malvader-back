@@ -10,8 +10,8 @@ router.get('/listar', ClienteController.getAll)
 
 router.post('/criar', ClienteController.create);
 
-// PUT router.put('/:id', ClienteController.update);
+router.put('/alterar/:cpf', ClienteController.update);
 
-// DELETE router.delete('/:id', ClienteController.delete);
+router.delete('/deletar/:cpf', ClienteController.delete);
 
 module.exports = router;
