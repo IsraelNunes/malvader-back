@@ -5,9 +5,14 @@ require('dotenv').config();
 
 const app = express();
 const PORT = 3000;
-
 app.use(cors());
 app.use(express.json());
+
+const usuarioRoutes = require('./view/routes/usuarioRoutes');
+app.use('/api/usuario', usuarioRoutes);
+
+const clienteRoutes = require('./view/routes/clienteRoutes');
+app.use('/api/cliente', clienteRoutes);
 
 app.get('/', (req, res) => {
     res.send('API Banco Rodando 🚀');
