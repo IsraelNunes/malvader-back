@@ -4,18 +4,18 @@ const router = express.Router();
 const FuncionarioController = require('../../src/controller/funcionarioController');
 
 //GET
-router.get('/:id', FuncionarioController.getById);
+//router.get('/:id', FuncionarioController.getById);
 
 // GET 
-router.get('/', FuncionarioController.getAll)
+router.get('/listar', FuncionarioController.getAll)
 
 // POST
-router.post('/', FuncionarioController.create);
+router.post('/criar', FuncionarioController.create);
 
 // PUT 
-router.put('/:id', FuncionarioController.update);
+//router.put('/:id', FuncionarioController.update);
 
 // DELETE 
-router.delete('/:id', FuncionarioController.delete);
+//router.delete('/:id', FuncionarioController.delete);
 
 module.exports = router;

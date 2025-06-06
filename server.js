@@ -14,6 +14,9 @@ app.use('/api/usuario', usuarioRoutes);
 const clienteRoutes = require('./view/routes/clienteRoutes');
 app.use('/api/cliente', clienteRoutes);
 
+const funcionarioRoutes = require('./view/routes/funcionarioRoutes');
+app.use('/api/funcionario', funcionarioRoutes);
+
 app.get('/', (req, res) => {
     res.send('API Banco Rodando 🚀');
 });
