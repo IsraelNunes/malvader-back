@@ -1,1 +1,0 @@
-//Funções auxiliares, como formatação de dados, geração de tokens, criptografia de senhas, validações, etc.
