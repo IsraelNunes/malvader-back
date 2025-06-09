@@ -66,9 +66,6 @@ static async create(req, res) {
     res.status(500).json({ erro: 'Erro ao criar funcionário' });
   }
 }
-
-}
-/*
 static async update(req, res) {
   try {
     const { cpf } = req.params;
@@ -77,42 +74,47 @@ static async update(req, res) {
       nome,
       telefone,
       data_nascimento,
-      score_credito
+      cargo,
+      salario,
+      data_admissao,
+      id_supervisor
     } = req.body;
 
     const dadosUsuario = { nome, telefone, data_nascimento };
-    const dadosCliente = { score_credito };
+    const dadosFuncionario = { cargo, salario, data_admissao, id_supervisor };
 
-    const resultado = await ClienteDAO.atualizar(cpf, dadosUsuario, dadosCliente);
+    const resultado = await FuncionarioDAO.atualizar(cpf, dadosUsuario, dadosFuncionario);
 
     if (!resultado) {
-      return res.status(404).json({ erro: 'Cliente não encontrado.' });
+      return res.status(404).json({ erro: 'Funcionário não encontrado.' });
     }
 
     res.status(200).json({
-      mensagem: 'Cliente atualizado com sucesso.',
-      cliente: resultado
+      mensagem: 'Funcionário atualizado com sucesso.',
+      funcionario: resultado
     });
   } catch (error) {
-    console.error('Erro ao atualizar cliente:', error);
-    res.status(500).json({ erro: 'Erro ao atualizar cliente.' });
+    console.error('Erro ao atualizar funcionário:', error);
+    res.status(500).json({ erro: 'Erro ao atualizar funcionário.' });
   }
 }
+
 static async delete(req, res) {
   try {
     const { cpf } = req.params;
 
-    const resultado = await ClienteDAO.deletar(cpf);
+    const resultado = await FuncionarioDAO.deletar(cpf);
 
     if (!resultado) {
-      return res.status(404).json({ erro: 'Cliente não encontrado.' });
+      return res.status(404).json({ erro: 'Funcionario não encontrado.' });
     }
 
-    res.status(200).json({ mensagem: 'Cliente deletado com sucesso.' });
+    res.status(200).json({ mensagem: 'Funcionario deletado com sucesso.' });
   } catch (error) {
-    console.error('Erro ao deletar cliente:', error);
-    res.status(500).json({ erro: 'Erro ao deletar cliente.' });
+    console.error('Erro ao deletar Funcionario:', error);
+    res.status(500).json({ erro: 'Erro ao deletar Funcionario.' });
   }
 }
-}*/
+
+}
 module.exports = FuncionarioController;

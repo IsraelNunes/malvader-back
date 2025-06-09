@@ -13,9 +13,9 @@ router.get('/listar', FuncionarioController.getAll)
 router.post('/criar', FuncionarioController.create);
 
 // PUT 
-//router.put('/:id', FuncionarioController.update);
+router.put('/atualizar/:cpf', FuncionarioController.update);
 
 // DELETE 
-//router.delete('/:id', FuncionarioController.delete);
+router.delete('/deletar/:cpf', FuncionarioController.delete);
 
 module.exports = router;
